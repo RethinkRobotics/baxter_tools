@@ -61,6 +61,18 @@ class CalibrateArm(baxter_interface.RobustController):
             10 * 60)
 
 
+def gripper_removed(side):
+    """
+    Verify grippers are removed for calibration/tare.
+    """
+    gripper = baxter_interface.Gripper(side)
+    if gripper.type() != 'custom':
+        rospy.logerr("Cannot calibrate with grippers attached."
+                       " Remove grippers before calibration!")
+        return False
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     required = parser.add_argument_group('required arguments')
@@ -70,7 +82,16 @@ def main():
     args = parser.parse_args(rospy.myargv()[1:])
     arm = args.limb
 
-    rospy.init_node('calibrate_arm_sdk', anonymous=True)
+    print("Initializing node...")
+    rospy.init_node('rsdk_calibrate_arm', anonymous=True)
+
+    print("Preparing to calibrate...")
+    gripper_warn = ("\nIMPORTANT: Make sure to remove grippers and other"
+                    " attachments before running calibrate.\n")
+    print(gripper_warn)
+    if not gripper_removed(args.limb):
+        return 1
+
     rs = baxter_interface.RobotEnable()
     rs.enable()
     cat = CalibrateArm(arm)
