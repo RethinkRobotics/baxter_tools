@@ -70,7 +70,7 @@ def main():
     args = parser.parse_args(rospy.myargv()[1:])
     arm = args.limb
 
-    rospy.init_node('calibrate_arm_sdk', anonymous=True)
+    rospy.init_node('rsdk_calibrate_arm_%s' % (arm,))
     rs = baxter_interface.RobotEnable()
     rs.enable()
     cat = CalibrateArm(arm)

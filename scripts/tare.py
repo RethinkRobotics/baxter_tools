@@ -71,7 +71,7 @@ def main():
     args = parser.parse_args(rospy.myargv()[1:])
     limb = args.limb
 
-    rospy.init_node('tare_sdk', anonymous=True)
+    rospy.init_node('rsdk_tare_%s' % (limb,))
     rs = baxter_interface.RobotEnable()
     rs.enable()
     tt = Tare(limb)

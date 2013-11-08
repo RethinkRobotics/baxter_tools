@@ -59,7 +59,7 @@ def main():
         parser.print_usage()
         parser.exit(0, "No action defined")
 
-    rospy.init_node('robot_enable', anonymous=True)
+    rospy.init_node('rsdk_robot_enable')
     rs = baxter_interface.RobotEnable()
 
     try:
