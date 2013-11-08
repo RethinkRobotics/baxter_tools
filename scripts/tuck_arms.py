@@ -252,7 +252,7 @@ def main():
     tuck = args.tuck
 
     rospy.loginfo("Initializing node... ")
-    rospy.init_node("tuck_arms")
+    rospy.init_node("rsdk_tuck_arms")
     rospy.loginfo("%sucking arms" % ("T" if tuck else "Unt",))
     tucker = Tuck(tuck)
     rospy.on_shutdown(tucker.clean_shutdown)

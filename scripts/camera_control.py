@@ -111,7 +111,7 @@ def main():
         parser.print_usage()
         parser.error("No action defined.")
 
-    rospy.init_node('rsdk_camera_control', anonymous=True)
+    rospy.init_node('rsdk_camera_control')
     action(camera, res)
     return 0
 

@@ -193,7 +193,7 @@ def main():
     cmd = args.cmd
     uuid = args.uuid
 
-    rospy.init_node('update_robot')
+    rospy.init_node('rsdk_update_robot')
     updater = Updater()
 
     if cmd == 'list':
