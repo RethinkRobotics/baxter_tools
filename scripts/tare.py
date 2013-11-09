@@ -62,6 +62,18 @@ class Tare(baxter_interface.RobustController):
             5 * 60)
 
 
+def gripper_removed(side):
+    """
+    Verify grippers are removed for calibration/tare.
+    """
+    gripper = baxter_interface.Gripper(side)
+    if gripper.type() != 'custom':
+        rospy.logerr("Cannot tare with grippers attached."
+                       " Remove grippers before tare!")
+        return False
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     required = parser.add_argument_group('required arguments')
@@ -71,7 +83,16 @@ def main():
     args = parser.parse_args(rospy.myargv()[1:])
     limb = args.limb
 
-    rospy.init_node('tare_sdk', anonymous=True)
+    print("Initializing node...")
+    rospy.init_node('rsdk_tare_arm', anonymous=True)
+
+    print("Preparing to tare...")
+    gripper_warn = ("\nIMPORTANT: Make sure to remove grippers and other"
+                    " attachments before running tare.\n")
+    print(gripper_warn)
+    if not gripper_removed(args.limb):
+        return 1
+
     rs = baxter_interface.RobotEnable()
     rs.enable()
     tt = Tare(limb)
