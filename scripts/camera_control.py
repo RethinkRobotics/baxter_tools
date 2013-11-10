@@ -28,9 +28,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import argparse
+import socket
 import sys
 
 import rospy
+import rosgraph
+
+import std_srvs.srv
 
 from baxter_core_msgs.srv import (
     ListCameras,
@@ -43,10 +47,41 @@ def list_cameras(*_args, **_kwds):
     rospy.wait_for_service('cameras/list', timeout=10)
     resp = ls()
     if len(resp.cameras):
-        print ('Cameras:')
-        print ('\n'.join(resp.cameras))
+        # Find open (publishing) cameras
+        master = rosgraph.Master('/rostopic')
+        resp.cameras
+        cam_topics = dict([(cam, "/cameras/%s/image" % cam)
+                               for cam in resp.cameras])
+        open_cams = dict([(cam, False) for cam in resp.cameras])
+        try:
+            topics = master.getPublishedTopics('')
+            for topic in topics:
+                for cam in resp.cameras:
+                    if topic[0] == cam_topics[cam]:
+                        open_cams[cam] = True
+        except socket.error:
+            raise ROSTopicIOException("Cannot communicate with master.")
+        for cam in resp.cameras:
+            print("%s%s" % (cam, ("  -  (open)" if open_cams[cam] else "")))
     else:
         print ('No cameras found')
+
+
+def reset_cameras(*_args, **_kwds):
+    reset_srv = rospy.ServiceProxy('cameras/reset', std_srvs.srv.Empty)
+    rospy.wait_for_service('cameras/reset', timeout=10)
+    reset_srv()
+
+
+def enum_cameras(*_args, **_kwds):
+    try:
+        reset_cameras()
+    except:
+        srv_ns = rospy.resolve_name('cameras/reset')
+        rospy.logerr("Failed to call reset devices service at %s", srv_ns)
+        raise
+    else:
+        list_cameras()
 
 
 def open_camera(camera, res, *_args, **_kwds):
@@ -73,15 +108,19 @@ def main():
     action_grp.add_argument(
         '-o', '--open', metavar='CAMERA', help='Open specified camera'
     )
+    parser.add_argument(
+        '-r', '--resolution', metavar='[X]x[Y]', default='1280x800',
+        help='Set camera resolution (default: 1280x800)'
+    )
     action_grp.add_argument(
         '-c', '--close', metavar='CAMERA', help='Close specified camera'
     )
     action_grp.add_argument(
         '-l', '--list', action='store_true', help='List available cameras'
     )
-    parser.add_argument(
-        '-r', '--resolution', metavar='[X]x[Y]', default='1280x800',
-        help='Set camera resolution (default: 1280x800)'
+    action_grp.add_argument(
+        '-e', '--enumerate', action='store_true',
+        help='Clear and re-enumerate connected devices'
     )
     args = parser.parse_args(rospy.myargv()[1:])
 
@@ -97,7 +136,7 @@ def main():
         lres = args.resolution.split('x')
         if len(lres) != 2:
             print fmt_res % tuple(str_res)
-            parser.error("Invalid resolution format: %s. Use [X]x[Y].")
+            parser.error("Invalid resolution format: %s. Use (X)x(Y).")
         res = (int(lres[0]), int(lres[1]))
         if not any((res[0] == r[0] and res[1] == r[1])
                    for r in CameraController.MODES):
@@ -106,6 +145,8 @@ def main():
     elif args.close:
         action = close_camera
         camera = args.close
+    elif args.enumerate:
+        action = enum_cameras
     else:
         # Should not reach here with required action_grp
         parser.print_usage()
