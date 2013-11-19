@@ -101,7 +101,7 @@ class Updater(object):
         """
         Command the robot to launch the update with the given uuid.
 
-        @param uuid - uuid of the update to start.
+        @param uuid: uuid of the update to start.
         """
         if not any([u.uuid == uuid for u in self._avail_updates.sources]):
             raise OSError(errno.EINVAL, "Invalid update uuid '%s'" % (uuid,))
@@ -119,8 +119,8 @@ def run_update(updater, uuid):
     """
     Run and monitor the progress of an update.
 
-    @param updater  - Instance of Updater to use.
-    @param uuid     - update uuid.
+    @param updater: Instance of Updater to use.
+    @param uuid: update uuid.
     """
 
     # Work around lack of a nonlocal keyword in python 2.x

@@ -46,7 +46,7 @@ class CalibrateArm(baxter_interface.RobustController):
         """
         Wrapper to run the CalibrateArm RobustController.
 
-        @param limb - Limb to run CalibrateArm on [left/right]
+        @param limb: Limb to run CalibrateArm on [left/right]
         """
         enable_msg = CalibrateArmEnable(isEnabled=True, uid='sdk')
 
