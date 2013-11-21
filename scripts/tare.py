@@ -46,7 +46,7 @@ class Tare(baxter_interface.RobustController):
         """
         Wrapper to run the Tare RobustController.
 
-        @param limb - Limb to run tare on [left/right]
+        @param limb: Limb to run tare on [left/right]
         """
         enable_msg = TareEnable(isEnabled=True, uid='sdk')
         enable_msg.data.tuneGravitySpring = True

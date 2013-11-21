@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <package>
   <name>baxter_tools</name>
-  <version>0.6.1</version>
+  <version>0.7.0</version>
   <description>
-    Useful tool application for use with the
-    Baxter robot from Rethink Robotics.
+    Useful operational and maintenance tools for use with the Baxter Research
+    Robot from Rethink Robotics
   </description>
 
   <maintainer email="rsdk.support@rethinkrobotics.com">
     Rethink Robotics Inc.
   </maintainer>
   <license>BSD</license>
-  <url type="website">http://www.rethinkrobotics.com</url>
+  <url type="website">http://www.rethinkrobotics.com/sdk</url>
   <url type="repository">
-    https://github.com/RethinkRobotics/sdk-examples
+    https://github.com/RethinkRobotics/baxter_tools
   </url>
   <url type="bugtracker">
-    https://github.com/RethinkRobotics/sdk-examples/issues
+    https://github.com/RethinkRobotics/baxter_tools/issues
   </url>
   <author>Rethink Robotics Inc.</author>
 
