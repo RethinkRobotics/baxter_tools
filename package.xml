@@ -3,8 +3,8 @@
   <name>baxter_tools</name>
   <version>0.7.0</version>
   <description>
-    Useful tool application for use with the
-    Baxter robot from Rethink Robotics.
+    Useful operational and maintenance tools for use with the Baxter Research
+    Robot from Rethink Robotics
   </description>
 
   <maintainer email="rsdk.support@rethinkrobotics.com">
