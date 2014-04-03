@@ -118,6 +118,8 @@ def main():
     test_dict = {
         'version': None,
         'valid_tests': {
+            '0.7.0': ['Enable', 'Messages', 'Services', 'Head', 'BlinkLEDs',
+                      'Cameras'],
             '0.8.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
                 'Grippers', 'BlinkLEDs', 'Cameras'],
             }
