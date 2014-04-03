@@ -3,6 +3,7 @@ project(baxter_tools)
 
 find_package(catkin
   REQUIRED
+  COMPONENTS
   rospy
   sensor_msgs
   geometry_msgs
