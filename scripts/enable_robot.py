@@ -33,6 +33,7 @@ import sys
 
 import rospy
 
+from baxter_interface import CHECK_VERSION
 import baxter_interface
 
 
@@ -60,7 +61,7 @@ def main():
         parser.exit(0, "No action defined")
 
     rospy.init_node('rsdk_robot_enable')
-    rs = baxter_interface.RobotEnable()
+    rs = baxter_interface.RobotEnable(CHECK_VERSION)
 
     try:
         for act in args.actions:

@@ -40,6 +40,7 @@ from std_msgs.msg import (
     Bool,
 )
 
+from baxter_interface import CHECK_VERSION
 import baxter_interface
 
 from baxter_core_msgs.msg import (
@@ -90,7 +91,7 @@ class Tuck(object):
                  'robot/limb/right/suppress_collision_avoidance',
                  Empty)
         }
-        self._rs = baxter_interface.RobotEnable()
+        self._rs = baxter_interface.RobotEnable(CHECK_VERSION)
         self._enable_pub = rospy.Publisher('robot/set_super_enable', Bool)
 
     def _update_collision(self, data, limb):
