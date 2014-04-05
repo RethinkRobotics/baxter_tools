@@ -36,6 +36,7 @@ import rospy
 
 import baxter_interface
 
+from baxter_interface import CHECK_VERSION
 from baxter_maintenance_msgs.msg import (
     CalibrateArmEnable,
 )
@@ -92,7 +93,7 @@ def main():
     if not gripper_removed(args.limb):
         return 1
 
-    rs = baxter_interface.RobotEnable()
+    rs = baxter_interface.RobotEnable(CHECK_VERSION)
     rs.enable()
     cat = CalibrateArm(arm)
     rospy.loginfo("Running calibrate on %s arm" % (arm,))

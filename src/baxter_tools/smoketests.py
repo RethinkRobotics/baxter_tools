@@ -350,7 +350,7 @@ class Grippers(SmokeTest):
             self._rs.enable()
             for name in ['left', 'right']:
                 limb = baxter_interface.Limb(name)
-                gripper = baxter_interface.Gripper(name)
+                gripper = baxter_interface.Gripper(name, CHECK_VERSION)
                 limb.move_to_neutral()
                 rospy.sleep(2.0)
                 print "Test: Verify %s Gripper Type" % (name.capitalize(),)
