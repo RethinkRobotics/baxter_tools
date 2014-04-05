@@ -31,6 +31,7 @@
 Tool to tuck/untuck Baxter's arms to/from the shipping pose
 """
 import argparse
+
 from copy import deepcopy
 
 import rospy
@@ -40,12 +41,12 @@ from std_msgs.msg import (
     Bool,
 )
 
-from baxter_interface import CHECK_VERSION
 import baxter_interface
 
 from baxter_core_msgs.msg import (
     CollisionAvoidanceState,
 )
+from baxter_interface import CHECK_VERSION
 
 
 class Tuck(object):
