@@ -65,6 +65,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIK,
     SolvePositionIKRequest,
 )
+from baxter_interface import CHECK_VERSION
 
 
 class SmokeTest(object):
