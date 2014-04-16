@@ -78,7 +78,7 @@ class Updater(object):
 
         baxter_dataflow.wait_for(
             lambda: self._avail_updates.uuid != '',
-            timeout=1.0,
+            timeout=5.0,
             timeout_msg="Failed to get list of available updates"
         )
 
