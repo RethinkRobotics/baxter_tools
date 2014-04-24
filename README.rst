@@ -24,7 +24,7 @@ baxter_tools Repository Overview
      |
      +-- scripts/              baxter operational/maintenance tools
      |   +-- calibrate_arm.py
-     |   +-- camera_control.py 
+     |   +-- camera_control.py
      |   +-- enable_robot.py
      |   +-- smoke_test.py
      |   +-- tare.py
