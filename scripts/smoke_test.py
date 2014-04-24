@@ -137,10 +137,10 @@ def main():
         print("\nExiting.")
         return 1
 
-    hostname = re.split('http://|.local', rospy.get_master().getUri()[2])[1]
+    serial = rospy.get_param("manifest/robot_serial")
     cur_time = time.localtime()
     filename = ("%s-%s.%s.%s-rsdk-%s.smoketest" %
-                (hostname, cur_time.tm_mon, cur_time.tm_mday,
+                (serial, cur_time.tm_mon, cur_time.tm_mday,
                  cur_time.tm_year, test_dict['version'],)
                 )
     if args.test == None:
