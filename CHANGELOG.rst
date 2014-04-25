@@ -1,6 +1,6 @@
 1.0.0 (2014-5-1)
 ---------------------------------
-- Updates all baxter_tool scripts to verify software version compatibility
+- Updates baxter_tools scripts to verify software version compatibility
 - Updates update_robot adding instructions for attaching grippers before proceeding with update
 - Fixes update_robot timeout for identifying available updates by increasing timeout to five seconds
 
