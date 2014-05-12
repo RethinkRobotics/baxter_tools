@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIK,
     SolvePositionIKRequest,
 )
+from baxter_interface import CHECK_VERSION
 
 
 class SmokeTest(object):
@@ -350,7 +351,7 @@ class Grippers(SmokeTest):
             self._rs.enable()
             for name in ['left', 'right']:
                 limb = baxter_interface.Limb(name)
-                gripper = baxter_interface.Gripper(name)
+                gripper = baxter_interface.Gripper(name, CHECK_VERSION)
                 limb.move_to_neutral()
                 rospy.sleep(2.0)
                 print "Test: Verify %s Gripper Type" % (name.capitalize(),)

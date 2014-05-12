@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,6 +36,7 @@ import rospy
 
 import baxter_interface
 
+from baxter_interface import CHECK_VERSION
 from baxter_maintenance_msgs.msg import (
     TareEnable,
 )
@@ -93,7 +94,7 @@ def main():
     if not gripper_removed(args.limb):
         return 1
 
-    rs = baxter_interface.RobotEnable()
+    rs = baxter_interface.RobotEnable(CHECK_VERSION)
     rs.enable()
     tt = Tare(limb)
     rospy.loginfo("Running tare on %s limb" % (limb,))

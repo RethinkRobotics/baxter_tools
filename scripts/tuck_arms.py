@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,7 @@
 Tool to tuck/untuck Baxter's arms to/from the shipping pose
 """
 import argparse
+
 from copy import deepcopy
 
 import rospy
@@ -45,6 +46,7 @@ import baxter_interface
 from baxter_core_msgs.msg import (
     CollisionAvoidanceState,
 )
+from baxter_interface import CHECK_VERSION
 
 
 class Tuck(object):
@@ -90,7 +92,7 @@ class Tuck(object):
                  'robot/limb/right/suppress_collision_avoidance',
                  Empty)
         }
-        self._rs = baxter_interface.RobotEnable()
+        self._rs = baxter_interface.RobotEnable(CHECK_VERSION)
         self._enable_pub = rospy.Publisher('robot/set_super_enable', Bool)
 
     def _update_collision(self, data, limb):

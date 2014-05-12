@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -118,8 +118,10 @@ def main():
     test_dict = {
         'version': None,
         'valid_tests': {
-            '0.7.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
-                'Grippers', 'BlinkLEDs', 'Cameras'],
+            '0.7.0': ['Enable', 'Messages', 'Services', 'Head', 'BlinkLEDs',
+                      'Cameras'],
+            '1.0.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
+                      'Grippers', 'BlinkLEDs', 'Cameras'],
             }
         }
 
@@ -135,10 +137,10 @@ def main():
         print("\nExiting.")
         return 1
 
-    hostname = re.split('http://|.local', rospy.get_master().getUri()[2])[1]
+    serial = rospy.get_param("manifest/robot_serial")
     cur_time = time.localtime()
     filename = ("%s-%s.%s.%s-rsdk-%s.smoketest" %
-                (hostname, cur_time.tm_mon, cur_time.tm_mday,
+                (serial, cur_time.tm_mon, cur_time.tm_mday,
                  cur_time.tm_year, test_dict['version'],)
                 )
     if args.test == None:

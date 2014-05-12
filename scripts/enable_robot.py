@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,8 @@ import rospy
 
 import baxter_interface
 
+from baxter_interface import CHECK_VERSION
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -60,7 +62,7 @@ def main():
         parser.exit(0, "No action defined")
 
     rospy.init_node('rsdk_robot_enable')
-    rs = baxter_interface.RobotEnable()
+    rs = baxter_interface.RobotEnable(CHECK_VERSION)
 
     try:
         for act in args.actions:
