@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIK,
     SolvePositionIKRequest,
 )
+from baxter_interface import CHECK_VERSION
 
 
 class SmokeTest(object):

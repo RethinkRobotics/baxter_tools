@@ -8,11 +8,11 @@ Code & Tickets
 --------------
 
 +-----------------+----------------------------------------------------------------+
-| Documentation   | https://github.com/RethinkRobotics/sdk-docs/wiki               |
+| Documentation   | http://sdk.rethinkrobotics.com/wiki                            |
 +-----------------+----------------------------------------------------------------+
 | Issues          | https://github.com/RethinkRobotics/baxter_tools/issues         |
 +-----------------+----------------------------------------------------------------+
-| Contributions   | https://github.com/RethinkRobotics/sdk-docs/wiki/Contributions |
+| Contributions   | http://sdk.rethinkrobotics.com/wiki/Contributions              |
 +-----------------+----------------------------------------------------------------+
 
 baxter_tools Repository Overview
@@ -24,7 +24,7 @@ baxter_tools Repository Overview
      |
      +-- scripts/              baxter operational/maintenance tools
      |   +-- calibrate_arm.py
-     |   +-- camera_control.py 
+     |   +-- camera_control.py
      |   +-- enable_robot.py
      |   +-- smoke_test.py
      |   +-- tare.py
@@ -52,4 +52,4 @@ Other Baxter Repositories
 Latest Release Information
 --------------------------
 
-https://github.com/RethinkRobotics/sdk-docs/wiki/Release-Changes
+http://sdk.rethinkrobotics.com/wiki/Release-Changes

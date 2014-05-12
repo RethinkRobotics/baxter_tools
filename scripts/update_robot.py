@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2013, Rethink Robotics
+# Copyright (c) 2013-2014, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -209,6 +209,13 @@ def main():
         if uuid == '':
             print "Error:  no update uuid specified"
             return 1
+        msg = ("NOTE: Please plug in any Rethink Electric Parallel Grippers\n"
+               "      into the robot now, so that the Gripper Firmware\n"
+               "      can be automatically upgraded with the robot.\n")
+        print (msg)
+        raw_input("Press <Enter> to Continue...")
+        if rospy.is_shutdown():
+            return 0
         return run_update(updater, uuid)
 
 if __name__ == '__main__':
