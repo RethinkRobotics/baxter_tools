@@ -236,7 +236,8 @@ class Head(SmokeTest):
                           '/share/images')
             img = cv.LoadImage(image_path + '/baxterworking.png')
             msg = cv_bridge.CvBridge().cv_to_imgmsg(img)
-            pub = rospy.Publisher('/robot/xdisplay', Image, latch=True)
+            pub = rospy.Publisher('/robot/xdisplay', Image,
+                                  latch=True, queue_size=10)
             pub.publish(msg)
             rospy.sleep(5.0)
             img = cv.LoadImage(image_path + '/researchsdk.png')
@@ -453,8 +454,9 @@ class Cameras(SmokeTest):
 
         xpub_img = rospy.Publisher(
             '/robot/xdisplay',
-            Image
-        )
+            Image,
+            queue_size=10
+            )
 
         def _display(camera, name):
             """
