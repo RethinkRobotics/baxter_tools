@@ -86,7 +86,6 @@ def enum_cameras(*_args, **_kwds):
 
 def open_camera(camera, res, *_args, **_kwds):
     cam = CameraController(camera)
-    cam.close()
     cam.resolution = res
     cam.open()
 
