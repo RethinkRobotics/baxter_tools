@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2013-2014, Rethink Robotics
+# Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -70,11 +70,13 @@ class Updater(object):
 
         self._updater_start = rospy.Publisher(
             '/updater/start',
-            std_msgs.msg.String)
+            std_msgs.msg.String,
+            queue_size=10)
 
         self._updater_stop = rospy.Publisher(
             '/updater/stop',
-            std_msgs.msg.Empty)
+            std_msgs.msg.Empty,
+            queue_size=10)
 
         baxter_dataflow.wait_for(
             lambda: self._avail_updates.uuid != '',

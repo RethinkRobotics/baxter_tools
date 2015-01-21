@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013-2014, Rethink Robotics
+# Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ import Queue
 
 import rospy
 
-import cv
+import cv2
 import cv_bridge
 import rospkg
 import std_msgs
@@ -234,13 +234,14 @@ class Head(SmokeTest):
             print "Test: Display Image on Screen - 5 seconds"
             image_path = (self._rp.get_path('baxter_tools') +
                           '/share/images')
-            img = cv.LoadImage(image_path + '/baxterworking.png')
-            msg = cv_bridge.CvBridge().cv_to_imgmsg(img)
-            pub = rospy.Publisher('/robot/xdisplay', Image, latch=True)
+            img = cv2.imread(image_path + '/baxterworking.png')
+            msg = cv_bridge.CvBridge().cv2_to_imgmsg(img)
+            pub = rospy.Publisher('/robot/xdisplay', Image,
+                                  latch=True, queue_size=10)
             pub.publish(msg)
             rospy.sleep(5.0)
-            img = cv.LoadImage(image_path + '/researchsdk.png')
-            msg = cv_bridge.CvBridge().cv_to_imgmsg(img)
+            img = cv2.imread(image_path + '/researchsdk.png')
+            msg = cv_bridge.CvBridge().cv2_to_imgmsg(img)
             pub.publish(msg)
             print "Disabling robot..."
             self._rs.disable()
@@ -453,14 +454,14 @@ class Cameras(SmokeTest):
 
         xpub_img = rospy.Publisher(
             '/robot/xdisplay',
-            Image
-        )
+            Image,
+            queue_size=10
+            )
 
         def _display(camera, name):
             """
             Open camera and display to screen for 10 seconds
             """
-            camera.close()
             camera.resolution = (960, 600,)
             print "Test: Opening %s" % name
             camera.open()
@@ -486,20 +487,38 @@ class Cameras(SmokeTest):
             """
             image_path = self._rp.get_path('baxter_tools')
             image_path += '/share/images/researchsdk.png'
-            img = cv.LoadImage(image_path)
-            msg = cv_bridge.CvBridge().cv_to_imgmsg(img)
+            img = cv2.imread(image_path)
+            msg = cv_bridge.CvBridge().cv2_to_imgmsg(img)
             xpub_img.publish(msg)
+
+        def _list_cameras():
+            """
+            List the cameras with power from ROS Service call.
+            """
+            srv = "/cameras/list"
+            rospy.wait_for_service(srv, 5.0)
+            camera_list_srv = rospy.ServiceProxy(srv, ListCameras)
+            return camera_list_srv()
 
         def _reset_defaults():
             """
             Turn on the left/right_hand_cameras with default settings.
             """
             print "Restarting the Default Cameras..."
-            for i in range(1, 3):
-                camera = baxter_interface.CameraController(camera_names[i])
+            camera_list = _list_cameras()
+            for camera_name in camera_names:
+                print "Restarting {0}".format(camera_name)
+                if not camera_name in camera_list.cameras:
+                    # Attempt to close another camera
+                    # and list services again
+                    # (power to this camera was off)
+                    baxter_interface.CameraController(camera_list.cameras[0]).close()
+                    camera_list = _list_cameras()
+                camera = baxter_interface.CameraController(camera_name)
                 camera.resolution = (640, 400,)
                 camera.fps = 25
                 camera.open()
+                camera.close()
 
         try:
             print "Enabling robot..."
@@ -507,23 +526,20 @@ class Cameras(SmokeTest):
             print ("Test: Verify Left_Hand, Right_Hand, and Head "
                    "Cameras Present")
             camera_names = (
-                'head_camera',
                 'left_hand_camera',
                 'right_hand_camera',
+                'head_camera',
                 )
-            srv = "/cameras/list"
-            rospy.wait_for_service(srv, 5.0)
-            camera_list_srv = rospy.ServiceProxy(srv, ListCameras)
-            camera_list = camera_list_srv()
+            camera_list = _list_cameras()
             for camera_name in camera_names:
                 if not camera_name in camera_list.cameras:
-                    raise NameError("Could not find camera - %s" % camera_name)
-                else:
-                    camera = baxter_interface.CameraController(camera_name)
-                    camera.close()
-            for camera_name in camera_names:
+                    baxter_interface.CameraController(camera_list.cameras[0]).close()
+                    camera_list = _list_cameras()
+                    if not camera_name in camera_list.cameras:
+                        raise NameError("Could not find camera - %s" % camera_name)
                 camera = baxter_interface.CameraController(camera_name)
                 _display(camera, camera_name)
+                camera_list = _list_cameras()
             _reset_defaults()
             print "Disabling robot..."
             self._rs.disable()

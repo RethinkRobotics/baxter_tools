@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013-2014, Rethink Robotics
+# Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -87,13 +87,14 @@ class Tuck(object):
         self._disable_pub = {
             'left': rospy.Publisher(
                  'robot/limb/left/suppress_collision_avoidance',
-                 Empty),
+                 Empty, queue_size=10),
             'right': rospy.Publisher(
                  'robot/limb/right/suppress_collision_avoidance',
-                 Empty)
+                 Empty, queue_size=10)
         }
         self._rs = baxter_interface.RobotEnable(CHECK_VERSION)
-        self._enable_pub = rospy.Publisher('robot/set_super_enable', Bool)
+        self._enable_pub = rospy.Publisher('robot/set_super_enable', 
+                                           Bool, queue_size=10)
 
     def _update_collision(self, data, limb):
         self._arm_state['collide'][limb] = len(data.collision_object) > 0

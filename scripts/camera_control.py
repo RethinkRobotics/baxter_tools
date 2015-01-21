@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2013-2014, Rethink Robotics
+# Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -86,7 +86,6 @@ def enum_cameras(*_args, **_kwds):
 
 def open_camera(camera, res, *_args, **_kwds):
     cam = CameraController(camera)
-    cam.close()
     cam.resolution = res
     cam.open()
 

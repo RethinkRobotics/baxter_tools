@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2013-2014, Rethink Robotics
+# Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -87,7 +87,7 @@ def get_version():
     Get current software version number from param server.
     """
     try:
-        version = rospy.get_param('/rethink/software_version').split('_')[0]
+        version = rospy.get_param('/rethink/software_version').rsplit('.', 1)[0]
     except socket.error:
         print("Exiting: Could not communicate with ROS Master to determine " +
               "Software version")
@@ -121,6 +121,8 @@ def main():
             '0.7.0': ['Enable', 'Messages', 'Services', 'Head', 'BlinkLEDs',
                       'Cameras'],
             '1.0.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
+                      'Grippers', 'BlinkLEDs', 'Cameras'],
+            '1.1.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
                       'Grippers', 'BlinkLEDs', 'Cameras'],
             }
         }

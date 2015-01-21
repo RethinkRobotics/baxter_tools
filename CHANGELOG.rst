@@ -1,3 +1,8 @@
+1.1.0 (2014-12-17)
+---------------------------------
+- Updates baxter_tools for ROS Indigo (queue_size args for Publishers, using cv2 as OpenCV dependancy)
+- Updates smoke_tests to use 64-bit Indigo Camera fix
+
 1.0.0 (2014-5-1)
 ---------------------------------
 - Updates baxter_tools scripts to verify software version compatibility
