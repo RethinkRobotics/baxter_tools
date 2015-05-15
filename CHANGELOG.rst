@@ -1,3 +1,8 @@
+1.1.0 (2015-5-15)
+---------------------------------
+- Migrates users from baxter_tools/update_robot.py to on-robot rethink-updater over
+  *ruser* SSH session. See (http://sdk.rethinkrobotics.com/wiki/SSH_Update) for details
+
 1.1.0 (2014-12-17)
 ---------------------------------
 - Updates baxter_tools for ROS Indigo (queue_size args for Publishers, using cv2 as OpenCV dependancy)
