@@ -124,6 +124,8 @@ def main():
                       'Grippers', 'BlinkLEDs', 'Cameras'],
             '1.1.0': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
                       'Grippers', 'BlinkLEDs', 'Cameras'],
+            '1.1.1': ['Enable', 'Messages', 'Services', 'Head', 'MoveArms',
+                      'Grippers', 'BlinkLEDs', 'Cameras'],
             }
         }
 

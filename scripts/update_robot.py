@@ -31,6 +31,7 @@ import errno
 import argparse
 import os
 import sys
+import re
 
 import rospy
 
@@ -183,9 +184,63 @@ def run_update(updater, uuid):
     return nl.rc
 
 
+def ros_updateable_version():
+    """
+    Verifies the version of the software is older than 1.1.0.
+    If newer, print out url to SSH update instructions
+    and return False
+    """
+    ros_updateable = True
+
+    def get_robot_version():
+        param_name = "rethink/software_version"
+        robot_version = rospy.get_param(param_name, None)
+        # parse out first 3 digits of robot version tag
+        pattern = ("^([0-9]+)\.([0-9]+)\.([0-9]+)")
+        match = re.search(pattern, robot_version)
+        if not match:
+            rospy.logwarn("RobotUpdater: Invalid robot version: %s",
+                          robot_version)
+            return None
+        return match.string[match.start(1):match.end(3)]
+
+    robot_version = get_robot_version()
+    if not robot_version:
+        rospy.logerr("RobotUpdater: Failed to retrieve robot version "
+                     "from rosparam: %s\n"
+                     "Verify robot state and connectivity "
+                     "(i.e. ROS_MASTER_URI)", param_name)
+        ros_updateable = False
+    else:
+        v_list = robot_version.split('.')
+        # If Version >= 1.1, SSH required
+        if ((float(v_list[0]) > 1) or
+           (float(v_list[0]) == 1 and float(v_list[1]) >= 1)):
+            errstr_version = ("RobotUpdater: Your Baxter's software "
+                              "version is (%s).\nFor robots with software "
+                              "1.1.0 and newer, software updates must be run "
+                              "by SSH'ing into the robot\n"
+                              "or by switching to Baxter's Display TTY1 with "
+                              "a keyboard. Be sure to insert a USB flash "
+                              "drive\ncontaining the update. "
+                              "After logging into the robot, run:\n"
+                              "  ruser@baxter ~ $ rethink-updater --list\n"
+                              "  Version\n"
+                              "  some.version.num.ber\n"
+                              "  ruser@baxter ~ $ rethink-updater --update "
+                              "some.version.num.ber\n"
+                              "Please see "
+                              "http://sdk.rethinkrobotics.com/wiki/SSH_Update "
+                              "for a detailed tutorial on updating.")
+            rospy.logerr(errstr_version, robot_version)
+            ros_updateable = False
+    return ros_updateable
+
+
 def main():
-    parser = argparse.ArgumentParser()
-    required = parser.add_mutually_exclusive_group(required=True)
+    description = "Legacy Robot Updater Script for versions 1.0.0 and earlier."
+    parser = argparse.ArgumentParser(description=description)
+    required = parser.add_mutually_exclusive_group()
     required.add_argument('-l', '--list', action='store_const',
                           dest='cmd', const='list', default='update',
                           help="List available updates and UUID's")
@@ -196,6 +251,8 @@ def main():
     uuid = args.uuid
 
     rospy.init_node('rsdk_update_robot')
+    if not ros_updateable_version():
+        sys.exit(1)
     updater = Updater()
 
     if cmd == 'list':
