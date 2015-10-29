@@ -142,7 +142,7 @@ class Tuck(object):
                 [pub.publish(Empty()) for pub in self._disable_pub.values()]
             if not self._rs.state().enabled:
                 self._enable_pub.publish(True)
-            head.set_pan(0.0, 50.0, timeout=0)
+            head.set_pan(0.0, 0.5, timeout=0)
             self._tuck_rate.sleep()
 
         if start_disabled:

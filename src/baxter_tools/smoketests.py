@@ -223,11 +223,11 @@ class Head(SmokeTest):
             self._rs.enable()
             print "Test: Moving Head to Neutral Location"
             head = baxter_interface.Head()
-            head.set_pan(0.0, 5.0)
+            head.set_pan(0.0, 0.05)
             print "Test: Pan Head"
-            head.set_pan(1.0, 5.0)
-            head.set_pan(-1.0, 5.0)
-            head.set_pan(0.0, 5.0)
+            head.set_pan(1.0, 0.05)
+            head.set_pan(-1.0, 0.05)
+            head.set_pan(0.0, 0.05)
             print "Test: Nod Head"
             for _ in xrange(3):
                 head.command_nod()
