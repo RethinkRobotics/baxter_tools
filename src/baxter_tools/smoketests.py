@@ -223,11 +223,11 @@ class Head(SmokeTest):
             self._rs.enable()
             print "Test: Moving Head to Neutral Location"
             head = baxter_interface.Head()
-            head.set_pan(0.0, 5.0)
+            head.set_pan(0.0, 0.05)
             print "Test: Pan Head"
-            head.set_pan(1.0, 5.0)
-            head.set_pan(-1.0, 5.0)
-            head.set_pan(0.0, 5.0)
+            head.set_pan(1.0, 0.05)
+            head.set_pan(-1.0, 0.05)
+            head.set_pan(0.0, 0.05)
             print "Test: Nod Head"
             for _ in xrange(3):
                 head.command_nod()
@@ -422,14 +422,14 @@ class BlinkLEDs(SmokeTest):
 
         try:
             itb_names = (
-                'left_itb_light_outer',
-                'left_itb_light_inner',
-                'torso_left_itb_light_outer',
-                'torso_left_itb_light_inner',
-                'right_itb_light_outer',
-                'right_itb_light_inner',
-                'torso_right_itb_light_outer',
-                'torso_right_itb_light_inner',
+                'left_outer_light',
+                'left_inner_light',
+                'torso_left_outer_light',
+                'torso_left_inner_light',
+                'right_outer_light',
+                'right_inner_light',
+                'torso_right_outer_light',
+                'torso_right_inner_light',
                 )
 
             for itb in itb_names:
