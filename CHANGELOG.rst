@@ -1,3 +1,8 @@
+1.2.0 (2015-12-21)
+---------------------------------
+- Updated Smoke Test and Tuck Arms scripts for head pan speed range shift (before [0, 100], and now [0, 1.0])
+- Updated ITB names for Navigators' name change
+
 1.1.1 (2015-5-15)
 ---------------------------------
 - Migrates users from baxter_tools/update_robot.py to on-robot rethink-updater over

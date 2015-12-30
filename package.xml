@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>baxter_tools</name>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <description>
     Useful operational and maintenance tools for use with the Baxter Research
     Robot from Rethink Robotics
