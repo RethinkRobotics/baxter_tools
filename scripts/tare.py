@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 
 # Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
@@ -102,7 +102,7 @@ def main():
     error = None
     try:
         tt.run()
-    except Exception, e:
+    except Exception as e:
         error = e.strerror
     finally:
         try:

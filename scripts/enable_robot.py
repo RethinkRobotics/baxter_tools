@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 
 # Copyright (c) 2013-2015, Rethink Robotics
 # All rights reserved.
@@ -67,7 +67,7 @@ def main():
     try:
         for act in args.actions:
             if act == 'state':
-                print rs.state()
+                print (rs.state())
             elif act == 'enable':
                 rs.enable()
             elif act == 'disable':
@@ -76,7 +76,7 @@ def main():
                 rs.reset()
             elif act == 'stop':
                 rs.stop()
-    except Exception, e:
+    except Exception as e:
         rospy.logerr(e.strerror)
 
     return 0
