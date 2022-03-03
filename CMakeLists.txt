@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.5)
 project(baxter_tools)
 
 find_package(catkin
@@ -26,11 +26,21 @@ catkin_package(
   baxter_maintenance_msgs
 )
 
-install(
-  DIRECTORY scripts/
+catkin_install_python(PROGRAMS 
+    scripts/calibrate_arm.py
+    scripts/camera_control.py
+    scripts/enable_robot.py 
+    scripts/smoke_test.py
+    scripts/tare.py
+    scripts/tuck_arms.py
+    scripts/update_robot.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-  USE_SOURCE_PERMISSIONS
-)
+  )
+# install(
+#   DIRECTORY scripts/
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#   USE_SOURCE_PERMISSIONS
+# )
 
 install(
   DIRECTORY share/
